@@ -27,6 +27,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
   const [index, setIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     setMounted(true);
@@ -38,6 +39,23 @@ export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
     media.addEventListener('change', handleChange);
     return () => media.removeEventListener('change', handleChange);
   }, []);
+
+  // Preload images for smooth transitions
+  useEffect(() => {
+    if (!mounted || typeof window === 'undefined') return;
+    
+    const imagesToLoad = isMobile ? mobileImages : desktopImages;
+    const loadedSet = new Set<string>();
+    
+    imagesToLoad.forEach((src) => {
+      const img = new window.Image();
+      img.onload = () => {
+        loadedSet.add(src);
+        setImagesLoaded(new Set(loadedSet));
+      };
+      img.src = src;
+    });
+  }, [mounted, isMobile]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -53,14 +71,27 @@ export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
     <div className={`fixed inset-0 z-30 flex items-center justify-center overflow-hidden transition-opacity duration-500 ${visible ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
       {/* Background Image Carousel */}
       <div className="absolute inset-0 z-0">
-        {images.map((src, i) => (
-          <img
-            key={src}
-            src={src}
-            alt="Couple"
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${i === index ? 'opacity-100' : 'opacity-0'}`}
-          />
-        ))}
+        {images.map((src, i) => {
+          const isActive = i === index;
+          const isVisible = isActive || imagesLoaded.has(src);
+          
+          return (
+            <img
+              key={src}
+              src={src}
+              alt="Couple"
+              className={`absolute inset-0 w-full h-full object-cover will-change-transform ${
+                isActive 
+                  ? 'opacity-100 scale-100' 
+                  : 'opacity-0 scale-105'
+              }`}
+              style={{
+                transition: 'opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), transform 1.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                visibility: isVisible ? 'visible' : 'hidden',
+              }}
+            />
+          );
+        })}
         
         {/* Overlay */}
         <div 
