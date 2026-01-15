@@ -20,7 +20,6 @@ import {
 } from "lucide-react"
 import { Cormorant_Garamond } from "next/font/google"
 import { siteConfig } from "@/content/site"
-import Image from "next/image"
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -396,61 +395,20 @@ export function GuestList() {
   }
 
   return (
-    <Section id="guest-list" className="relative z-30 py-6 sm:py-10 md:py-12 lg:py-16 overflow-hidden">
-      {/* Top-left corner decoration */}
-      <div className="absolute top-0 left-0 z-10 pointer-events-none m-0 p-0">
-        <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] m-0 p-0">
-          <Image
-            src="/decoration/top-left-corner.png"
-            alt=""
-            fill
-            className="object-contain object-top-left"
-            priority={false}
-            style={{ 
-              filter: 'brightness(0) saturate(100%) invert(84%) sepia(28%) saturate(557%) hue-rotate(342deg) brightness(100%) contrast(88%)',
-              objectPosition: 'top left'
-            }}
-          />
-        </div>
-      </div>
-
-      {/* Bottom-right corner decoration */}
-      <div className="absolute bottom-0 right-0 z-10 pointer-events-none m-0 p-0">
-        <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 lg:w-[28rem] lg:h-[28rem] xl:w-[32rem] xl:h-[32rem] m-0 p-0">
-          <Image
-            src="/decoration/right-bottom-corner.png"
-            alt=""
-            fill
-            className="object-contain object-bottom-right"
-            priority={false}
-            style={{ 
-              filter: 'brightness(0) saturate(100%) invert(84%) sepia(28%) saturate(557%) hue-rotate(342deg) brightness(100%) contrast(88%)',
-              objectPosition: 'bottom right'
-            }}
-          />
-        </div>
-      </div>
-
+    <Section id="guest-list" className="relative z-30 py-6 sm:py-10 md:py-12 lg:py-16">
       {/* Header */}
       <div className="relative z-10 text-center mb-4 sm:mb-6 md:mb-8 lg:mb-10 px-2 sm:px-3 md:px-4">
-        {/* Decorative element above title */}
-        <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
-          <div className="w-8 sm:w-12 md:w-16 h-px bg-[#E1C49C]/25" />
-          <div className="w-1.5 h-1.5 bg-gradient-to-br from-[#A58169] to-[#751A23] rounded-full shadow-[0_0_12px_rgba(165,129,105,0.9)]" />
-          <div className="w-8 sm:w-12 md:w-16 h-px bg-[#E1C49C]/25" />
-        </div>
-
         {/* Small label */}
         <p
           className={`${cormorant.className} text-[0.7rem] sm:text-xs md:text-sm uppercase tracking-[0.28em] text-[#E1C49C] mb-2`}
-          style={{ textShadow: "0 2px 10px rgba(0,0,0,0.75)" }}
+          style={{ textShadow: "0 2px 10px rgba(0,0,0,0.8)" }}
         >
           Confirm Your Attendance
         </p>
         
         <h2
           className="style-script-regular text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#E1C49C] mb-1.5 sm:mb-3 md:mb-4"
-          style={{ textShadow: "0 4px 18px rgba(0,0,0,0.9)" }}
+          style={{ textShadow: "0 4px 18px rgba(0,0,0,0.85)" }}
         >
           RSVP
         </h2>
@@ -458,15 +416,17 @@ export function GuestList() {
         <p className={`${cormorant.className} text-xs sm:text-sm md:text-base text-[#E1C49C]/95 font-light max-w-xl mx-auto leading-relaxed px-2 mb-2 sm:mb-3`}>
           Please search for your name below to confirm your presence at our special day
         </p>
-        <p className={`${cormorant.className} text-[0.65rem] sm:text-xs md:text-sm text-[#E1C49C]/95 font-light max-w-xl mx-auto leading-relaxed px-2 mb-2 sm:mb-3`}>
+        <p className={`${cormorant.className} text-[0.65rem] sm:text-xs md:text-sm text-[#E1C49C]/90 font-light max-w-xl mx-auto leading-relaxed px-2 mb-2 sm:mb-3`}>
           RSVP Deadline: {siteConfig.details.rsvp.deadline}
         </p>
         
         {/* Decorative element below subtitle */}
-        <div className="flex items-center justify-center gap-2 mt-3 sm:mt-4">
-          <div className="w-8 sm:w-12 md:w-16 h-px bg-[#E1C49C]/25" />
-          <div className="w-1.5 h-1.5 bg-gradient-to-br from-[#A58169] to-[#751A23] rounded-full shadow-[0_0_12px_rgba(165,129,105,0.9)]" />
-          <div className="w-8 sm:w-12 md:w-16 h-px bg-[#E1C49C]/25" />
+        <div className="flex items-center justify-center gap-1.5 sm:gap-2 mt-2 sm:mt-3 md:mt-4 lg:mt-5">
+          <div className="w-6 sm:w-8 md:w-12 lg:w-16 h-px bg-gradient-to-r from-transparent via-[#327B72]/80 to-transparent" />
+          <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-[#327B72]/90 rounded-full" />
+          <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-white/85 rounded-full" />
+          <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-[#327B72]/90 rounded-full" />
+          <div className="w-6 sm:w-8 md:w-12 lg:w-16 h-px bg-gradient-to-l from-transparent via-[#327B72]/80 to-transparent" />
         </div>
       </div>
 
@@ -482,10 +442,10 @@ export function GuestList() {
                   <Search className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-white" />
                 </div>
                 <div>
-                  <label className="block text-xs sm:text-sm md:text-base font-semibold text-white font-sans mb-0.5 sm:mb-1">
+                  <label className="block text-xs sm:text-sm md:text-base font-semibold text-[#E1C49C] font-sans mb-0.5 sm:mb-1">
                     Find Your Name
                   </label>
-                  <p className="text-[10px] sm:text-xs text-white/80 font-sans">
+                  <p className="text-[10px] sm:text-xs text-[#E1C49C]/90 font-sans">
                     Type as you search to see instant results
                   </p>
                 </div>
