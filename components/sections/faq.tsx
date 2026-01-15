@@ -94,7 +94,7 @@ export function FAQ() {
       {/* Background image - matching gallery */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <img
-          src="/Details/Rubi.jpeg"
+          src="/Details/new.jpeg"
           alt=""
           aria-hidden="true"
           className="absolute inset-0 w-full h-full object-cover opacity-30"
