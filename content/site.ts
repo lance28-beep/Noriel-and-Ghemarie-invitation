@@ -8,7 +8,7 @@ export const siteConfig = {
     groomName: "Noriel Renzo Liwanag",
   },
   wedding: {
-    date: "FEB 8, 2026",
+    date: "FEB 21, 2026",
     time: "3:00 PM",
     venue: "CASA ANTONIA, MANGALDAN, PANGASINAN",
     tagline: "are getting married!",
@@ -24,8 +24,8 @@ export const siteConfig = {
     location: "San Isidro Parish Church",
     venue: "San Isidro Parish Church",
     address: "",
-    date: "February 8 2026",
-    day: "Sunday",
+    date: "February 21 2026",
+    day: "Friday",
     time: "3:00 PM",
     entourageTime: "2:00 PM",
     guestsTime: "2:30 PM",
@@ -34,7 +34,7 @@ export const siteConfig = {
     location: "Pan Resort and Hotel",
     venue: "Pan Resort and Hotel",
     address: "",
-    date: "FEB 8, 2026",
+    date: "FEB 21, 2026",
     time: "Reception to follow",
   },
   dressCode: {

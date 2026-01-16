@@ -7,8 +7,8 @@ import { siteConfig } from "@/content/site"
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://noriel-and-ghemarie-invitation.vercel.app/"
 const canonicalUrl = siteUrl.replace(/\/$/, "")
-const desktopHero = "/Details/newLinkPreview.jpg"
-const mobileHero = "/Details/newLinkPreview.jpg"
+const desktopHero = "/Details/sdfs_imresizer.jpg"
+const mobileHero = "/Details/sdfs_imresizer.jpg"
 const eventImageUrl = `${canonicalUrl}${desktopHero}`
 
 const coupleNames = `${siteConfig.couple.groomNickname} and ${siteConfig.couple.brideNickname}`
@@ -19,8 +19,8 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Event",
   name: `${siteConfig.couple.groomNickname} and ${siteConfig.couple.brideNickname} Wedding`,
-  startDate: "2026-03-06T14:00:00+08:00",
-  endDate: "2026-03-06T22:00:00+08:00",
+  startDate: "2026-02-21T14:00:00+08:00",
+  endDate: "2026-02-21T22:00:00+08:00",
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   location: [
@@ -149,6 +149,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
   viewportFit: "cover",
   colorScheme: "light",
   themeColor: "#D2A4A4",

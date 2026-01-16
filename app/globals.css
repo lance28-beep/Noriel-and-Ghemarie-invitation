@@ -138,6 +138,20 @@
 
 html {
   scroll-behavior: smooth;
+  /* Prevent zoom on mobile */
+  touch-action: pan-x pan-y;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  /* Prevent zoom on mobile */
+  touch-action: pan-x pan-y;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  /* Prevent double-tap zoom */
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
 }
 
 /* Imperial Script font utility class */

@@ -40,8 +40,8 @@ function CardRotate({ children, onSendToBack, sensitivity }: CardRotateProps) {
 
   return (
     <motion.div
-      className="absolute cursor-grab active:cursor-grabbing"
-      style={{ x, y, rotateX, rotateY }}
+      className="absolute cursor-grab active:cursor-grabbing touch-none"
+      style={{ x, y, rotateX, rotateY, touchAction: 'none' }}
       drag
       dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
       dragElastic={0.6}
@@ -103,11 +103,12 @@ export default function Stack({
 
   return (
     <div
-      className="relative"
+      className="relative touch-none"
       style={{
         width: cardDimensions.width,
         height: cardDimensions.height,
         perspective: 600,
+        touchAction: 'none',
       }}
     >
       {cards.map((card, index) => {
