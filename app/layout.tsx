@@ -180,6 +180,10 @@ export default function RootLayout({
       </head>
       <body
         className={`${inter.variable} ${greatVibes.variable} ${imperialScript.variable} ${cinzel.variable} font-inter antialiased text-foreground`}
+        style={{ 
+          WebkitFontSmoothing: 'antialiased',
+          MozOsxFontSmoothing: 'grayscale'
+        }}
       >
         {children}
         <Analytics />

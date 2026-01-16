@@ -275,3 +275,99 @@ body {
   background-clip: text;
   color: transparent;
 }
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* Optimize scroll performance */
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Reduce unnecessary repaints during scroll */
+body {
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+
+/* GPU acceleration for smooth animations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize image rendering */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  /* Use GPU for image rendering */
+  transform: translateZ(0);
+}
+
+/* Prevent layout shifts during image loading */
+img {
+  content-visibility: auto;
+}
+
+/* Optimize animations - only use will-change when animating */
+@media (prefers-reduced-motion: no-preference) {
+  .animating {
+    will-change: transform, opacity;
+  }
+}
+
+/* Remove will-change after animation completes */
+.animation-complete {
+  will-change: auto;
+}
+
+/* Optimize text rendering */
+body, input, textarea, select, button {
+  text-rendering: optimizeSpeed;
+}
+
+/* Prevent font flicker */
+@font-face {
+  font-display: swap;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Optimize fixed/sticky elements */
+.fixed, .sticky, [class*="fixed"], [class*="sticky"] {
+  will-change: auto;
+  contain: layout style paint;
+}
+
+/* Content visibility optimization for sections */
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}
+
+/* Prevent unnecessary layout calculations */
+.contain-layout {
+  contain: layout;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
+.contain-strict {
+  contain: strict;
+}

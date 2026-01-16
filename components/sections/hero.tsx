@@ -41,6 +41,8 @@ export function Hero() {
 
   // Detect screen size and update isMobile state
   useEffect(() => {
+    let resizeTimeout: NodeJS.Timeout
+    
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth < 768) // md breakpoint
     }
@@ -48,10 +50,19 @@ export function Hero() {
     // Check on mount
     checkScreenSize()
     
-    // Listen for resize events
-    window.addEventListener('resize', checkScreenSize)
+    // Debounced resize handler to prevent excessive updates
+    const handleResize = () => {
+      clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(checkScreenSize, 150)
+    }
     
-    return () => window.removeEventListener('resize', checkScreenSize)
+    // Listen for resize events
+    window.addEventListener('resize', handleResize, { passive: true })
+    
+    return () => {
+      clearTimeout(resizeTimeout)
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
   // Get the appropriate image array based on screen size

@@ -34,10 +34,24 @@ export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
     if (typeof window === 'undefined') return;
 
     const media = window.matchMedia('(max-width: 768px)');
-    const handleChange = () => setIsMobile(media.matches);
-    handleChange();
+    let debounceTimeout: NodeJS.Timeout;
+    
+    const handleChange = () => {
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        setIsMobile(media.matches);
+      }, 100);
+    };
+    
+    // Set initial state
+    setIsMobile(media.matches);
+    
     media.addEventListener('change', handleChange);
-    return () => media.removeEventListener('change', handleChange);
+    
+    return () => {
+      clearTimeout(debounceTimeout);
+      media.removeEventListener('change', handleChange);
+    };
   }, []);
 
   // Preload images for smooth transitions

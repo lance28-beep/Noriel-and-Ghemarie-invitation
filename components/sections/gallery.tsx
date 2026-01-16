@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import NextImage from "next/image"
 import { X, ChevronLeft, ChevronRight } from "lucide-react"
 import { Section } from "@/components/section"
@@ -46,11 +46,21 @@ export function Gallery() {
   const [pinchStartScale, setPinchStartScale] = useState(1)
   const [lastTap, setLastTap] = useState(0)
   const [panStart, setPanStart] = useState<{ x: number; y: number; panX: number; panY: number } | null>(null)
+  const rafRef = useRef<number | null>(null)
 
   useEffect(() => {
     // Simulate loading for better UX
     const timer = setTimeout(() => setIsLoading(false), 500)
     return () => clearTimeout(timer)
+  }, [])
+
+  // Cleanup RAF on unmount
+  useEffect(() => {
+    return () => {
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
+    }
   }, [])
 
   const navigateImage = useCallback((direction: 'prev' | 'next') => {
@@ -256,22 +266,29 @@ export function Gallery() {
                 }
               }}
               onTouchMove={(e) => {
-                if (e.touches.length === 2 && pinchStartDist) {
-                  const dx = e.touches[0].clientX - e.touches[1].clientX
-                  const dy = e.touches[0].clientY - e.touches[1].clientY
-                  const dist = Math.hypot(dx, dy)
-                  const scale = clamp((dist / pinchStartDist) * pinchStartScale, 1, 3)
-                  setZoomScale(scale)
-                } else if (e.touches.length === 1) {
-                  const t = e.touches[0]
-                  if (zoomScale > 1 && panStart) {
-                    const dx = t.clientX - panStart.x
-                    const dy = t.clientY - panStart.y
-                    setPan({ x: panStart.panX + dx, y: panStart.panY + dy })
-                  } else if (touchStartX !== null) {
-                    setTouchDeltaX(t.clientX - touchStartX)
+                // Use RAF to throttle updates
+                if (rafRef.current) return
+                
+                rafRef.current = requestAnimationFrame(() => {
+                  rafRef.current = null
+                  
+                  if (e.touches.length === 2 && pinchStartDist) {
+                    const dx = e.touches[0].clientX - e.touches[1].clientX
+                    const dy = e.touches[0].clientY - e.touches[1].clientY
+                    const dist = Math.hypot(dx, dy)
+                    const scale = clamp((dist / pinchStartDist) * pinchStartScale, 1, 3)
+                    setZoomScale(scale)
+                  } else if (e.touches.length === 1) {
+                    const t = e.touches[0]
+                    if (zoomScale > 1 && panStart) {
+                      const dx = t.clientX - panStart.x
+                      const dy = t.clientY - panStart.y
+                      setPan({ x: panStart.panX + dx, y: panStart.panY + dy })
+                    } else if (touchStartX !== null) {
+                      setTouchDeltaX(t.clientX - touchStartX)
+                    }
                   }
-                }
+                })
               }}
               onTouchEnd={() => {
                 setPinchStartDist(null)

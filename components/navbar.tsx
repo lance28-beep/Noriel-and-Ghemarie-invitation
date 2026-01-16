@@ -30,20 +30,30 @@ export function Navbar() {
   const [activeSection, setActiveSection] = useState("#home")
 
   const rafIdRef = useRef<number | null>(null)
+  const lastScrollY = useRef(0)
 
   useEffect(() => {
     const onScroll = () => {
       if (rafIdRef.current != null) return
+      
       rafIdRef.current = window.requestAnimationFrame(() => {
         rafIdRef.current = null
-        setIsScrolled(window.scrollY > 50)
+        const currentScrollY = window.scrollY
+        
+        // Only update state if scroll crosses the threshold
+        if ((lastScrollY.current <= 50 && currentScrollY > 50) || 
+            (lastScrollY.current > 50 && currentScrollY <= 50)) {
+          setIsScrolled(currentScrollY > 50)
+        }
+        
+        lastScrollY.current = currentScrollY
       })
     }
 
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => {
       if (rafIdRef.current != null) cancelAnimationFrame(rafIdRef.current)
-      window.removeEventListener("scroll", onScroll as EventListener)
+      window.removeEventListener("scroll", onScroll)
     }
   }, [])
 
@@ -56,28 +66,42 @@ export function Navbar() {
 
     if (elements.length === 0) return
 
+    // Throttle updates to prevent excessive state changes
+    let updateTimeout: NodeJS.Timeout | null = null
+
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter(e => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio - a.intersectionRatio))
-        if (visible.length > 0) {
-          const topMost = visible[0]
-          if (topMost.target && topMost.target.id) {
-            const newActive = `#${topMost.target.id}`
-            setActiveSection(prev => (prev === newActive ? prev : newActive))
+        // Clear any pending update
+        if (updateTimeout) clearTimeout(updateTimeout)
+        
+        // Debounce the state update
+        updateTimeout = setTimeout(() => {
+          const visible = entries
+            .filter(e => e.isIntersecting)
+            .sort((a, b) => (b.intersectionRatio - a.intersectionRatio))
+          
+          if (visible.length > 0) {
+            const topMost = visible[0]
+            if (topMost.target && topMost.target.id) {
+              const newActive = `#${topMost.target.id}`
+              setActiveSection(prev => (prev === newActive ? prev : newActive))
+            }
           }
-        }
+        }, 100) // 100ms debounce
       },
       {
         root: null,
         rootMargin: "-20% 0px -70% 0px",
-        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1]
+        threshold: [0, 0.5, 1] // Reduced thresholds for better performance
       }
     )
 
     elements.forEach(el => observer.observe(el))
-    return () => observer.disconnect()
+    
+    return () => {
+      if (updateTimeout) clearTimeout(updateTimeout)
+      observer.disconnect()
+    }
   }, [])
 
   const menuItems = useMemo(() => navLinks.map((l) => ({ label: l.label, ariaLabel: `Go to ${l.label}`, link: l.href })), [])

@@ -72,7 +72,7 @@ void main() {
 `
 
 const SilkPlane = forwardRef(function SilkPlane({ uniforms }, ref) {
-  const { viewport } = useThree()
+  const { viewport, invalidate } = useThree()
 
   useLayoutEffect(() => {
     if (ref.current) {
@@ -81,7 +81,10 @@ const SilkPlane = forwardRef(function SilkPlane({ uniforms }, ref) {
   }, [ref, viewport])
 
   useFrame((_, delta) => {
-    ref.current.material.uniforms.uTime.value += 0.1 * delta
+    if (ref.current && ref.current.material && ref.current.material.uniforms) {
+      ref.current.material.uniforms.uTime.value += 0.1 * delta
+      invalidate()
+    }
   })
 
   return (
@@ -109,7 +112,17 @@ const Silk = ({ speed = 5, scale = 1, color = "#E0B4B1", noiseIntensity = 1.5, r
   )
 
   return (
-    <Canvas dpr={[1, 2]} frameloop="always">
+    <Canvas 
+      dpr={[1, 1.5]} 
+      frameloop="demand"
+      performance={{ min: 0.5 }}
+      gl={{ 
+        powerPreference: "high-performance",
+        antialias: false,
+        stencil: false,
+        depth: false
+      }}
+    >
       <SilkPlane ref={meshRef} uniforms={uniforms} />
     </Canvas>
   )
