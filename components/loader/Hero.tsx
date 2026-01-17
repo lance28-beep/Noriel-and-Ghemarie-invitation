@@ -31,13 +31,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
 
   useEffect(() => {
     setMounted(true);
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") return;
 
-    const media = window.matchMedia('(max-width: 768px)');
-    let debounceTimeout: NodeJS.Timeout;
+    const media = window.matchMedia("(max-width: 768px)");
+    let debounceTimeout: ReturnType<typeof setTimeout> | null = null;
     
     const handleChange = () => {
-      clearTimeout(debounceTimeout);
+      if (debounceTimeout) clearTimeout(debounceTimeout);
       debounceTimeout = setTimeout(() => {
         setIsMobile(media.matches);
       }, 100);
@@ -46,29 +46,52 @@ export const Hero: React.FC<HeroProps> = ({ onOpen, visible }) => {
     // Set initial state
     setIsMobile(media.matches);
     
-    media.addEventListener('change', handleChange);
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", handleChange);
+    } else if (typeof media.addListener === "function") {
+      media.addListener(handleChange);
+    }
     
     return () => {
-      clearTimeout(debounceTimeout);
-      media.removeEventListener('change', handleChange);
+      if (debounceTimeout) clearTimeout(debounceTimeout);
+      if (typeof media.removeEventListener === "function") {
+        media.removeEventListener("change", handleChange);
+      } else if (typeof media.removeListener === "function") {
+        media.removeListener(handleChange);
+      }
     };
   }, []);
 
   // Preload images for smooth transitions
   useEffect(() => {
-    if (!mounted || typeof window === 'undefined') return;
-    
+    if (!mounted || typeof window === "undefined") return;
+
+    let cancelled = false;
     const imagesToLoad = isMobile ? mobileImages : desktopImages;
     const loadedSet = new Set<string>();
-    
-    imagesToLoad.forEach((src) => {
+    const imageRefs = imagesToLoad.map((src) => {
       const img = new window.Image();
       img.onload = () => {
+        if (cancelled) return;
+        loadedSet.add(src);
+        setImagesLoaded(new Set(loadedSet));
+      };
+      img.onerror = () => {
+        if (cancelled) return;
         loadedSet.add(src);
         setImagesLoaded(new Set(loadedSet));
       };
       img.src = src;
+      return img;
     });
+
+    return () => {
+      cancelled = true;
+      imageRefs.forEach((img) => {
+        img.onload = null;
+        img.onerror = null;
+      });
+    };
   }, [mounted, isMobile]);
 
   useEffect(() => {
