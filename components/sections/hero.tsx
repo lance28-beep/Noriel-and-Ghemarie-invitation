@@ -74,24 +74,45 @@ export function Hero() {
   useEffect(() => {
     setImagesLoaded(false)
     setCurrentImageIndex(0)
-    
+
+    if (typeof window === "undefined" || backgroundImages.length === 0) {
+      return
+    }
+
+    let cancelled = false
+    let preloadTimeout: ReturnType<typeof setTimeout> | null = null
+
     // Load first image with priority to show it immediately
     const firstImg = new Image()
     firstImg.src = backgroundImages[0]
     firstImg.onload = () => {
-      setImagesLoaded(true) // Show first image immediately
+      if (!cancelled) {
+        setImagesLoaded(true) // Show first image immediately
+      }
     }
-    
+    firstImg.onerror = () => {
+      if (!cancelled) {
+        setImagesLoaded(true)
+      }
+    }
+
     // Then preload a small lookahead set in background (avoid preloading all)
-    setTimeout(() => {
-      if (typeof navigator !== 'undefined' && (navigator as any).connection?.saveData) return
+    preloadTimeout = setTimeout(() => {
+      if (typeof navigator !== "undefined" && (navigator as any).connection?.saveData) return
       backgroundImages.slice(1, 3).forEach((src) => {
         const img = new Image()
-        img.decoding = 'async'
-        img.loading = 'lazy' as any
+        img.decoding = "async"
+        img.loading = "lazy" as any
         img.src = src
       })
     }, 200)
+
+    return () => {
+      cancelled = true
+      if (preloadTimeout) clearTimeout(preloadTimeout)
+      firstImg.onload = null
+      firstImg.onerror = null
+    }
   }, [backgroundImages])
 
   useEffect(() => {

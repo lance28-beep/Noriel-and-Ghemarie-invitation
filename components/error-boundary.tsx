@@ -23,6 +23,18 @@ export class ErrorBoundary extends Component<Props, State> {
     this.state = { hasError: false }
   }
 
+  componentDidMount() {
+    if (typeof window === "undefined") return
+    window.addEventListener("error", this.handleWindowError)
+    window.addEventListener("unhandledrejection", this.handleUnhandledRejection)
+  }
+
+  componentWillUnmount() {
+    if (typeof window === "undefined") return
+    window.removeEventListener("error", this.handleWindowError)
+    window.removeEventListener("unhandledrejection", this.handleUnhandledRejection)
+  }
+
   static getDerivedStateFromError(error: Error): State {
     // Update state so the next render will show the fallback UI
     return { hasError: true, error }
@@ -31,6 +43,26 @@ export class ErrorBoundary extends Component<Props, State> {
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // Log error to console for debugging
     console.error("ErrorBoundary caught an error:", error, errorInfo)
+  }
+
+  private handleWindowError = (event: ErrorEvent) => {
+    if (this.state.hasError) return
+    const error =
+      event.error instanceof Error
+        ? event.error
+        : new Error(event.message || "Unexpected runtime error")
+    console.error("Global runtime error captured:", error)
+    this.setState({ hasError: true, error })
+  }
+
+  private handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+    if (this.state.hasError) return
+    const error =
+      event.reason instanceof Error
+        ? event.reason
+        : new Error(String(event.reason || "Unhandled promise rejection"))
+    console.error("Unhandled promise rejection captured:", error)
+    this.setState({ hasError: true, error })
   }
 
   render() {

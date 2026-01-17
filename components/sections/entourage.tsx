@@ -118,9 +118,7 @@ export function Entourage() {
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
-      }
+      observer.disconnect()
     }
   }, [])
 
