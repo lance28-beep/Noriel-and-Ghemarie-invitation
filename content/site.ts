@@ -50,28 +50,43 @@ export const siteConfig = {
     },
     note: "We kindly request our guests to dress in formal attire with a color of our motif."
   },
-  narrative: `Every great love story begins with a spark — ours just happened to turn into something extraordinary.
-  Sometimes, love arrives when you least expect it, and for us, it began entirely by chance. Our paths crossed in the most ordinary moment, yet neither of us knew that encounter would change our lives forever.
-  
-  They say love always comes when you least expect it — and that’s exactly how our story began.
-  We’d known each other for a long time, but if you ask me how it truly started… well, I didn’t like him at first. To me, he was just a “Kuya,” and honestly, I thought he was a playboy, so I never paid much attention to him.
-  
-  But time has a funny way of changing things.
-  Little by little, Kuya became a friend. And that friend became someone I looked forward to talking to. Then, the man I once couldn’t stand somehow became the man I can’t imagine life without.
-  
-  Of course, we can’t forget his nephew, Ian — the ultimate matchmaker. He would always tease his uncle about me, and it didn’t help that the “marites” kept insisting we were already a couple. We weren’t… but maybe all that teasing and linking pushed us closer together.
-  So, For the marites: THANK YOU 
-  
-  We also experienced a long-distance relationship. I went to Dubai to fulfill my dreams while he stayed in the Philippines, patiently waiting for me. But I couldn’t stay miles away from him — that’s why I came back home, to be with him.
-  
-  As our connection grew, he became my support system, my partner, my safe place. He was thoughtful, genuine, and full of love. Together, we built a relationship that is simple, strong, and real — a love that feels perfect in all its imperfections.
-  
-  Then came August 30, 2024 — my birthday. What I thought was just a simple celebration turned into the most unforgettable moment of my life: the day he knelt down and asked me the question I didn’t even have to think twice about. I said “yes,” of course.
-  
-  On August 31, 2025, we had our pamamanhikan — another step closer to forever.
-  
-  And now, here we are, ready to continue this love story that started with annoyance, grew through friendship, survived distance and teasing, and ended with a “yes.”
-  We stand here, surrounded by the people we love most — ready for a lifetime of growing, learning, and choosing each other every single day.`,
+  narrative: `On February 5, 2015, destiny quietly began its work. Renzo saw Ghem in a Facebook
+photo—smiling effortlessly with her high school friends. In that single moment, curiosity turned
+into courage. He asked one of her friends for help, hoping for a simple introduction that would
+change everything.
+With a playful nudge from fate, her friend said, “Accept mo daw si Renzo Liwanag… ayan ha,
+baka humabol pa kayo sa Valentine’s.”
+And so, Ghem accepted the friend request.
+What began as a simple click—an innocent “accept”—became the first chapter of a love story
+written not just by chance, but by perfect timing. From that small digital moment grew
+conversations, laughter, friendship, and a love strong enough to lead them here
+today—standing hand in hand, choosing each other, forever.
+Together, they discovered that love could be a partnership built on dreams. Even as students
+starting with online selling, they stood side by side—planning, hustling, and believing in their
+potential. They explored every venture their hearts dared to dream—buy and sell, boutique
+businesses, cellphone trading, motor parts, and barbecue stalls—proving that shared vision
+makes no dream too small and no goal too far. In every effort, they invested trust, patience,
+and love, building not just businesses but a life together rooted in teamwork, resilience, and
+growing love.
+Like all true love stories, theirs faced trials. In 2021, challenges led to a season of distance,
+where hearts were tested and paths uncertain. Yet, through patience, commitment, and
+enduring faith, Renzo and Ghem found their way back to one another.
+What was once shaken returned stronger,
+deeper, and more certain than ever
+before—a testament to love that
+perseveres.
+In 2023, after years of shared dedication
+and hard work, they opened their own
+minimart, turning dreams into reality and
+demonstrating the power of love,
+perseverance, and partnership.
+With Ghem devoted to her career and
+Renzo supporting their growing ventures,
+they continue to walk side by side.
+Today, they stand hand in hand, not only as
+partners in life and business but as souls
+who have chosen each other—today,
+tomorrow, and always. `,
   colors: {
     primary: "#6A4F82",
     secondary: "#B9AACB",

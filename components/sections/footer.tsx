@@ -147,7 +147,7 @@ export function Footer() {
         >
           <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-72 md:h-72 lg:w-80 lg:h-80 opacity-95">
             <Image
-              src="/monogram/monogramnew.png"
+              src="/monogram/updatedmonogram.png"
               alt={`${siteConfig.couple.groomNickname} and ${siteConfig.couple.brideNickname} Monogram`}
               fill
               className="object-contain"

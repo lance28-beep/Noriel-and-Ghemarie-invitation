@@ -322,6 +322,89 @@ export function Details() {
         </div>
       </div>
 
+      {/* After Party Container */}
+      <div className="relative z-10 mb-4 sm:mb-8 max-w-6xl mx-auto px-3 sm:px-5">
+        <div className="overflow-hidden rounded-xl sm:rounded-2xl border border-[#751A23]/40 bg-gradient-to-b shadow-[0_20px_60px_rgba(0,0,0,0.45)] transition-transform duration-500 group hover:scale-[1.01]">
+          {/* After Party image */}
+          <div className="relative h-48 sm:h-64 md:h-80 w-full">
+            <Image
+              src="/Details/afterparty.png"
+              alt="Summerfield Villa (Villa Denise)"
+              fill
+              className="object-cover"
+              sizes="100vw"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#751A23]/95 via-[#751A23]/65 to-transparent" />
+            <div className="absolute inset-0 flex flex-col justify-end px-3 sm:px-6 pb-3 sm:pb-6 text-white">
+              <p className="style-script-regular text-xl sm:text-2xl md:text-3xl font-normal leading-none drop-shadow-md mb-2">
+                After Party
+              </p>
+            </div>
+          </div>
+
+          {/* After Party details panel */}
+          <div className="bg-[#E1C49C]/95 text-[#51080F] px-3 sm:px-6 py-4 sm:py-6 backdrop-blur-sm">
+            {/* Address */}
+            <div className="text-left pb-3 mb-3 border-b border-[#751A23]/30">
+              <p className="text-[9px] sm:text-[10px] font-semibold tracking-[0.18em] text-[#751A23] uppercase mb-1">
+                Location
+              </p>
+              <p className="text-sm sm:text-base md:text-lg font-medium text-[#51080F]">
+                Summerfield Villa (Villa Denise)
+              </p>
+            </div>
+
+            <div className="space-y-2.5">
+              <p className="text-[9px] sm:text-[10px] font-semibold tracking-[0.18em] text-[#751A23] uppercase mb-3">
+                After Party Details
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 text-left">
+                <div className="rounded-md border border-[#751A23] bg-white/80 px-2.5 py-2 shadow-sm">
+                  <p className="text-[9px] sm:text-[10px] font-semibold tracking-[0.18em] text-[#751A23] uppercase mb-0.5">
+                    Date
+                  </p>
+                  <p className="text-sm sm:text-base font-bold text-[#51080F]">February 21, 2026</p>
+                </div>
+                <div className="rounded-md border border-[#751A23] bg-white/80 px-2.5 py-2 shadow-sm">
+                  <p className="text-[9px] sm:text-[10px] font-semibold tracking-[0.18em] text-[#751A23] uppercase mb-0.5">
+                    Time
+                  </p>
+                  <p className="text-sm sm:text-base font-bold text-[#51080F]">9:00 PM</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-3 pt-4">
+              <button
+                onClick={() => openInMaps(`https://maps.google.com/?q=${encodeURIComponent("Summerfield Villa (Villa Denise)")}`)}
+                className="flex items-center justify-center gap-1.5 rounded-lg bg-[#751A23] text-white py-2.5 sm:py-3 shadow-lg hover:translate-y-[-2px] hover:bg-[#751A23]/90 transition-all text-xs sm:text-sm font-semibold"
+              >
+                <Navigation className="w-4 h-4" />
+                Get Directions
+              </button>
+              <button
+                onClick={() => copyToClipboard("Summerfield Villa (Villa Denise)", "afterparty")}
+                className="flex items-center justify-center gap-1.5 rounded-lg border border-[#751A23]/35 text-[#51080F] py-2.5 sm:py-3 hover:bg-[#751A23]/5 transition-all text-xs sm:text-sm font-semibold"
+              >
+                {copiedItems.has("afterparty") ? (
+                  <>
+                    <Check className="w-4 h-4" />
+                    Copied
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    Copy Address
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Enhanced Image Modal */}
       {showImageModal && (
         <div
