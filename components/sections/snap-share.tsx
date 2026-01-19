@@ -19,8 +19,8 @@ export function SnapShare() {
   const [copiedAllHashtags, setCopiedAllHashtags] = useState(false)
   const [copiedDriveLink, setCopiedDriveLink] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [websiteUrl, setWebsiteUrl] = useState("https://example.com")
 
-  const websiteUrl = typeof window !== "undefined" ? window.location.href : "https://example.com"
   const driveLink = siteConfig.snapShare?.googleDriveLink || ""
   const hashtags = ["#RenzoFoundHisGhem"]
   const allHashtagsText = hashtags.join(" ")
@@ -30,6 +30,12 @@ export function SnapShare() {
   const sanitizedBrideName = brideNickname.replace(/\s+/g, "")
 
   const shareText = `Celebrate ${groomNickname} and ${brideNickname}'s wedding! Explore the details and share your special memories: ${websiteUrl} ${allHashtagsText} ✨`
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setWebsiteUrl(window.location.href)
+    }
+  }, [])
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 640)
